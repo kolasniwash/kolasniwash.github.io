@@ -8,7 +8,7 @@ main:
   - title: "About"
     url: /about/
   - title: "Books"
-    url: /about/
+    url: /books/
   - title: "CV"
-    url: /about/
+    url: /cv/
     
