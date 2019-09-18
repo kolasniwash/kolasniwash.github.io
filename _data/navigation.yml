@@ -1,14 +1,10 @@
 main:
-  - title: "Posts"
-    url: /posts/
-  - title: "Categories"
-    url: /categories/
-  - title: "Tags"
-    url: /tags/
-  - title: "About"
+  - title: "blog"
+    url: /
+  - title: "reading list"
+    url: /reading-list/
+  - title: "about"
     url: /about/
-  - title: "Books"
-    url: /books/
-  - title: "CV"
-    url: /cv/
+  - title: "archive"
+    url: /posts/
     
