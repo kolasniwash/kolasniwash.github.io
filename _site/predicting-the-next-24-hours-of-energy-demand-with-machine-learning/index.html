@@ -1,0 +1,627 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Predicting the next 24 hours of energy demand with machine learning - NICHOLASJHANA</title>
+<meta name="description" content="This project investigates various model implementations that predict short-term (24 hour advance) energy demands in the Spanish energy market.">
+
+
+  <meta name="author" content=" ">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="NICHOLASJHANA">
+<meta property="og:title" content="Predicting the next 24 hours of energy demand with machine learning">
+<meta property="og:url" content="http://localhost:4000/predicting-the-next-24-hours-of-energy-demand-with-machine-learning/">
+
+
+  <meta property="og:description" content="This project investigates various model implementations that predict short-term (24 hour advance) energy demands in the Spanish energy market.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-04-18T21:34:30+02:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/predicting-the-next-24-hours-of-energy-demand-with-machine-learning/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="NICHOLASJHANA Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          NICHOLASJHANA
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/reading-list/" >reading list</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >about</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archive/" >archive</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Predicting the next 24 hours of energy demand with machine learning">
+    <meta itemprop="description" content="This project investigates various model implementations that predict short-term (24 hour advance) energy demands in the Spanish energy market.">
+    <meta itemprop="datePublished" content="April 18, 2019">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Predicting the next 24 hours of energy demand with machine learning
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  8 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>This project investigates various model implementations that predict short-term (24 hour advance) energy demands in the Spanish energy market.</p>
+
+<p><a href="https://youtu.be/KaWCwBD_UBA">Watch the presentation</a></p>
+
+<h2 id="problem-definition-and-motivation">Problem Definition and Motivation</h2>
+<p>This project is inspired by the paper <a href="https://arxiv.org/abs/1906.05433">Tackling Climate Change with Machine Learning</a> where forecasting is identified as one of the highest impact research areas to contributing to more renewable energy in the grid. Further, it explores the results from <a href="https://www.researchgate.net/publication/330155110_Short-Term_Load_Forecasting_in_Smart_Grids_An_Intelligent_Modular_Approach">here</a> where the authors argue that traditional statistical forecasting is more computationally efficient compared to state of the art approaches. Finally, the last model draws from the data structure, and problem setup in the <a href="https://www.researchgate.net/publication/323847484_Statistical_and_Machine_Learning_forecasting_methods_Concerns_and_ways_forward">following paper</a> to implement a state of the art Long Short Term Network forecast.</p>
+
+<p>Energy demand forecasting is highly relevant to an effiecnt electrical grid. Improved forecasting is beneficial to deployment of renewable energy, planning for high/low load days, and reducing wastage from polluting on reseve standby generation (typically inefficent gas or coal fired powerplants).</p>
+
+<h5 id="project-objectives">Project objectives</h5>
+<ol>
+  <li>Implement classical statistical forecasting models</li>
+  <li>Implement state of the art neural network forecasting models</li>
+  <li>Implement and gain insight into walk forward validation, forecasting performance, and feature selection.</li>
+</ol>
+
+<h5 id="problem-summary">Problem summary</h5>
+<p>The specific problem addressed is to use past energy consumption data, day of the week, holidays, and weather data to once daily predict the next 24 hours of energy demand. This is a highly relevant problem carried out everyday by electrical grid Transmission Service Operators (TSOs) across the world. In order to appropriately meet energy demands TSOs issue energy demand forecasts once a day for the coming 24 hour period. The expected maxium energy demand is forecasted on an hourly basis and consists of 24 hourly slices. These forecasts are used in the planning of supply dispatch, for day-ahead bidding processes, and combined with ultrashort term (6 hours or less) forecasts that maintain balance in the grid.</p>
+
+<h3 id="methods-used">Methods Used</h3>
+<ul>
+  <li>Data Wrangling</li>
+  <li>Machine Learning</li>
+  <li>Regression</li>
+  <li>Neural Networks</li>
+  <li>Predictive Modelling</li>
+  <li>Walk forward cross validation</li>
+  <li>Hypothesis Testing</li>
+</ul>
+
+<h3 id="technologies">Technologies</h3>
+<ul>
+  <li>Python</li>
+  <li>Keras, Tensorflow</li>
+  <li>Pandas, Numpy, Jupyter</li>
+  <li>Statsmodels, Scikit-Learn</li>
+  <li>Prophet</li>
+  <li>Joblib, holidays libraries</li>
+  <li>Google Cloud Platform</li>
+</ul>
+
+<h2 id="project-description">Project Description</h2>
+<p>This project compared forecasting capabilities of classical statistical models versus modern neural network implementations on a realistic task of short-term energy demand forecasting. The main question the projec asks is:</p>
+
+<p><strong><em>What forecasting model and supervised learning problem formulation gives the lowest MAE given limited computation power constraints</em></strong></p>
+
+<p>Timeseries forecasting models implemented in addressing this question are:</p>
+<ol>
+  <li>SARIMA - Seasonal Autoregressive Integrated Moving Average</li>
+  <li>Prophet General Additive Model by Facebook</li>
+  <li>Long-Short Term Memory Nerual Network</li>
+</ol>
+
+<h3 id="data-sources">Data sources</h3>
+<p>Energy data was obtained from the <a href="https://transparency.entsoe.eu/">ENTSOE Transparency Platform</a>. The platform provides electrical demand, generation, and price information for all european countries since 2015. Data is available at hourly and daily timeframes.</p>
+
+<p>Weather data was purchased from <a href="https://openweathermap.org/api">OpenWeatherApi</a>. Data from the five largest cities in spain was pruchased for the previous 8 years. Data includes hourly measurements of temperature (min, max), humidity, preciptation (1h, 3h), snow (1h, 3h), and general descrption of weather status (text format)</p>
+
+<p>Day of the week and holiday data was genreated using the holidays library. The <a href="https://github.com/nicholasjhana/short-term-energy-demand-forecasting/blob/master/data_creation_day_types.ipynb">following notebook</a> explains how the helper function was implemented. The helper function can be accessed from <a href="https://github.com/nicholasjhana/short-term-energy-demand-forecasting/blob/master/make_holidays_data.py">make_holidays_data.py</a>.</p>
+
+<h3 id="modelling-short-term-energy-demand">Modelling Short-Term Energy Demand</h3>
+
+<p>Features used to generate forecasts include autocorrelated hourly energy consumption, hourly weather data, days of the week, and holidays. A detailed decrption of each feature is below:</p>
+
+<ul>
+  <li>Energy demand lags ranging between 7 days (168 hours) and 1 month</li>
+  <li>Two PCA vectors generated from weather data</li>
+  <li>Days of the week one hot encoded</li>
+  <li>Holidays one hot encoded</li>
+</ul>
+
+<p>The output of each model was always the peak expected demand per hour for the next 24 hour period. This forecast was generated from 00:00 each day, over the course of the testing period (see cross validation).</p>
+
+<h3 id="supervised-learning-problem">Supervised learning problem</h3>
+<p>Starting with a univariate sequence of hourly energy demand data points, a supervised learning problem was constructed by shifting data points in such that a previous timestep t-1 was used to predict t. An example of this shifting (also named lagging or lags) is presented in the table below.</p>
+
+<h5 id="days-shifted-by-x-steps">Days shifted by x steps</h5>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>t</th>
+      <th>t-1</th>
+      <th>t-2</th>
+      <th>t-3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Day 1:</td>
+      <td>0</td>
+      <td>Nan</td>
+      <td>Nan</td>
+      <td>Nan</td>
+    </tr>
+    <tr>
+      <td>Day 2:</td>
+      <td>1</td>
+      <td>0</td>
+      <td>Nan</td>
+      <td>Nan</td>
+    </tr>
+    <tr>
+      <td>Day 3:</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>Nan</td>
+    </tr>
+    <tr>
+      <td>Day 4:</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Day 5:</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Day 6:</td>
+      <td>5</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>Day 7:</td>
+      <td>6</td>
+      <td>5</td>
+      <td>4</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Two variants of this lagging was implemented. The SARIMA and Prophet models used direct lags following the linear sequence of data through time (i.e. to lag one complete day was 24 lags). The neural network used a different structure where one lag represented the same hourly segment, one day prior.</p>
+
+<h4 id="sarima--prophet">SARIMA &amp; Prophet</h4>
+<p>The SARIMA and Prophet models construct the previous time steps by shifting the sequence of energy and weather data one hour at a time and output a sequence of 24 values corresponding with the next day’s demand. The table below describes the learning problem’s structure.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Input Lagged Features</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th>Outputs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>30 Days prior</td>
+      <td>…</td>
+      <td>7 days prior</td>
+      <td>2 days prior</td>
+      <td>Previous day</td>
+      <td>»&gt; MODEL »&gt;</td>
+      <td>Forecast</td>
+    </tr>
+    <tr>
+      <td>h0…h24</td>
+      <td>…</td>
+      <td>h0…h24</td>
+      <td>h0…h24</td>
+      <td>h0…h24</td>
+      <td>»&gt; MODEL »&gt;</td>
+      <td>h0 … h24</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>When combined together with may samples the structure of the problem takes on the following shape. Feature vectors are created by lagging the original sequence at different intervals. These vectors are stacked on top of one another by alinging similar lags. One 2D matrix of lagged features consitutes the data needed for a single day’s forecast (one sample). The output as seen in the figure below is a row vector of the 24 hourly predictions.</p>
+
+<p>&lt;img src=”img/sarima-prophet-data-input.png” width=800 height=400 align=”middle”&gt;</p>
+
+<h4 id="lstm">LSTM</h4>
+<p>The LSTM problem framing was different from the SARIMA and Prophet. The feature input was the same, however the relationship between the shifted features was based on the assumption that each hour of the day had a stronger autocorreltion with the same hour a day prior than the hour prior. The structure of the supervised problem is seen in the table below.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>I/O</th>
+      <th>date</th>
+      <th>h00</th>
+      <th>h01</th>
+      <th>…</th>
+      <th>h23</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lag features</td>
+      <td>2015-12-01</td>
+      <td>21331.0</td>
+      <td>20622.0</td>
+      <td>…</td>
+      <td>25101.0</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+    <tr>
+      <td>Lag features</td>
+      <td>2016-01-01</td>
+      <td>22431.0</td>
+      <td>21632.0</td>
+      <td>…</td>
+      <td>24000.0</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td>⌄⌄⌄⌄⌄</td>
+      <td>⌄⌄⌄⌄⌄</td>
+      <td>⌄⌄⌄⌄⌄</td>
+      <td>⌄⌄⌄⌄⌄</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>LSTM-h0</td>
+      <td>LSTM-h1</td>
+      <td>…</td>
+      <td>LSTM-h23</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td>⌄⌄⌄⌄⌄</td>
+      <td>⌄⌄⌄⌄⌄</td>
+      <td>⌄⌄⌄⌄⌄</td>
+      <td>⌄⌄⌄⌄⌄</td>
+    </tr>
+    <tr>
+      <td>Forecast</td>
+      <td>2016-01-02</td>
+      <td>22113.0</td>
+      <td>20515.0</td>
+      <td>…</td>
+      <td>26029.0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To formulte this problem using the same data processing as in the SARIMA and Prophet models you would arive at a single data structure per hourly output. In the graphic we see each hourly output has its own 3D input comprised of the lags (previous timestep data), features (energy, weather, day of week), and the sample day of forecast.</p>
+
+<p>&lt;img src=”img/lstm-data-transform.png” width=800 height=400 align=”middle”&gt;</p>
+
+<p>The result is computationally intensive for SARIMA and Prophet as you would need to implemente 24 models to solve the supervised learning problem. This implementation is also not feasible in terms of dimensionality with a neural network (LSTM doesn’t accept 4D data).</p>
+
+<p>The solution, as outlined in <a href="https://www.researchgate.net/publication/323847484_Statistical_and_Machine_Learning_forecasting_methods_Concerns_and_ways_forward">one of the motivating papers</a> is to flatten the features and lags into a single vector. In this way each hourly segment has its own vector containing all the features at the set previous timesteps. The graphic below shows how the alternating green and blue lines represent the various features and lags compressed into a 1D vector.</p>
+
+<p>&lt;img src=”img/lstm-data-input.png” width=600 height=400 align=”middle”&gt;</p>
+
+<h3 id="cross-validation-descrption">Cross validation descrption</h3>
+
+<p>Walk forward validation is a standard backtesting methodology when working with timeseries data. The method allows for the validation of test results and reduces overfitting to a small sample of data. The following graphic shows how the whole data set is broken into training and test segments. Once the model has been tested, the previous test segment is introduced into the training data and the model is retrained. Finally the model is tested again on the expanded dataset.</p>
+
+<p>&lt;img src=”img/walk-forward-validation.png” width=800 height=400 align=”middle”&gt;</p>
+
+<p>In this project the goal was to have a stadnard training window of 1 year, and a test window of 3 months. Within the training and test sets, a prediction was made once per calendar day. In practice however, this was too computatinoally intensive for the SARIMA, and prophet models given the resources of the project (2 weeks). The intervals were therefore reduced.</p>
+
+<h2 id="project-needs-and-core-tasks">Project needs and core tasks</h2>
+
+<ul>
+  <li>data processing/cleaning
+    <ul>
+      <li>cleaning of energy data, weather data, and generation of holiday data</li>
+      <li>process data to generate autoregressive features</li>
+      <li>processing data to frame the problem for SARIMA, Prophet, LSTM</li>
+    </ul>
+  </li>
+  <li>data exploration
+    <ul>
+      <li>visualize energy consumption patterns at different temporal scales</li>
+      <li>visualize weather correlations and</li>
+    </ul>
+  </li>
+  <li>statistical modeling
+    <ul>
+      <li>(auto)correlation analysis of model features and feature selection</li>
+      <li>PCA transformation of colinear (weather) features</li>
+      <li>parameter selection for SARIMA model: determining differncing, seasonality, and trend components</li>
+      <li>parameter selection for Prophet model: configure base mode, additional regressors</li>
+    </ul>
+  </li>
+  <li>machine learning
+    <ul>
+      <li>configuration, hyperparmeter tuning, training, and testing of LSTM neural network</li>
+    </ul>
+  </li>
+  <li>data pipeline
+    <ul>
+      <li>helper functions to prepare input, calcualte erros, run walk forward cross validation, and produce visualizations for each model</li>
+    </ul>
+  </li>
+  <li>reporting/presentation
+    <ul>
+      <li>documentation of helper functions</li>
+      <li>presentation of work at live event</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="run-these-models-yourself">Run these models yourself</h2>
+
+<p>Each model pipeline may be run independently. To replicate results, or build on this project, you can get started by:</p>
+
+<ol>
+  <li>Clone this repo</li>
+  <li>Raw data used for this project Data is found in CSV format within this repo <a href="Repo folder containing raw data">here</a> within this repo.
+ a. Updated energy data can be downloaded from the <a href="https://transparency.entsoe.eu/">ENTSOE Transparency Platform</a>
+ b. Weather data was obtained from the <a href="https://openweathermap.org/api">OpenWeatherApi</a> and additional data may be purchased.</li>
+  <li>Follow the requirements.yml file to install dependencys</li>
+  <li>Data processing, transformation, and models are found in the main repo.</li>
+  <li>Executing any of the following files will run the designated model:
+ a. model_sarima.py
+ b. model_prophet.py
+ c. model_lstm.py</li>
+  <li>Model output is saved in json for the SARIMA and LSTM. Prophet output is saved in csv.</li>
+  <li>Results folder stores the model outputs under their respective folder names.</li>
+</ol>
+
+<h2 id="featured-notebooks--deliverables">Featured Notebooks &amp; Deliverables</h2>
+
+<h4 id="models">Models</h4>
+<ul>
+  <li><a href="https://github.com/nicholasjhana/short-term-energy-demand-forecasting/blob/master/model_arima.ipynb">SARIMA</a></li>
+  <li><a href="https://github.com/nicholasjhana/short-term-energy-demand-forecasting/blob/master/model_prophet.ipynb">Prophet</a></li>
+  <li><a href="https://github.com/nicholasjhana/short-term-energy-demand-forecasting/blob/master/model_lstm.ipynb">LSTM</a></li>
+</ul>
+
+<h4 id="anlysis-and-helper-functions">Anlysis and Helper Functions</h4>
+<ul>
+  <li><a href="https://github.com/nicholasjhana/short-term-energy-demand-forecasting/blob/master/data_analysis.ipynb">Feature Analysis Energy and Weather</a></li>
+  <li><a href="https://github.com/nicholasjhana/short-term-energy-demand-forecasting/blob/master/data_features_preprocessing.ipynb">Data window and transform functions</a></li>
+</ul>
+
+<h4 id="communications">Communications</h4>
+<ul>
+  <li><a href="https://github.com/nicholasjhana/short-term-energy-demand-forecasting/blob/master/presentation-short-term-load-forecasting.pdf">Presentation Deck</a></li>
+  <li><a href="https://youtu.be/KaWCwBD_UBA">Presentation Video</a></li>
+  <li><a href="link">Blog Post</a></li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-04-18T21:34:30+02:00">April 18, 2019</time></p>
+        
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+            
+      </div>
+    </div>
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://twitter.com/nicholasjhana" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+        
+      
+        
+          <li><a href="https://github.com/nicholasjhana" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://linkedin.com/nicholashaw" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> Linkedin</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2019 NICHOLASJHANA. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
