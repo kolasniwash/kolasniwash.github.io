@@ -4,7 +4,7 @@ title: "About"
 ---
 
 
-{% raw %}<img src="http://127.0.0.1:4000/assets/images/nic-presentation-small.png" height=400 width=600 margin='center'>{% endraw %}
+{% raw %}<img src="http://nicholasjhana.github.io/assets/images/nic-presentation-small.png" height=400 width=600 margin='center'>{% endraw %}
 *Presnting my project at a Machine Learning event in Barcelona*
 
 
