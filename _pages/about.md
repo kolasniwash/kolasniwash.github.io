@@ -9,7 +9,7 @@ author profile: false
 
 *Presenting at a Machine Learning event in Barcelona*
 
-I'm an engineer who dabbles in machine learning. My core interest is in energy systems and forecasting, however I'm most focused on building up the tools and skills to contribute to meaningfull projects. 
+I'm an engineer on a quest into machine learning. My core interest is in energy systems and forecasting, however I'm most focused on building up the tools and skills to contribute to meaningfull projects. 
 
 ## Machine Learning and Modelling Projects
 
