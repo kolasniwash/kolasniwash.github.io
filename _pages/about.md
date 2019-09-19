@@ -5,7 +5,8 @@ author profile: false
 ---
 
 
-{% raw %}<img src="http://nicholasjhana.github.io/assets/images/nic-presentation-small.png" alt='' height=400 width=600 align='center'>{% endraw %}
+{% raw %}
+<img src="http://nicholasjhana.github.io/assets/images/nic-presentation-small.png" alt="" class="full">{% endraw %}
 
 *Presenting at a Machine Learning event in Barcelona*
 
