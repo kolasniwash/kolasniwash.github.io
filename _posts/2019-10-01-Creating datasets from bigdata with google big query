@@ -1,0 +1,52 @@
+---
+title: "Creating datasets from bigdata with google big query"
+date: 2019-10-01T11:39:30-04:00
+---
+
+Summary
+This post is a summary of what I've learned from the Launching into Machine Learning course by Google Cloud on Coursera. It's part of the Machine Learning with TensorFlow on Google Cloud Platform Specialization. Code examples are taken from the [training-data-analyist](https://github.com/nicholasjhana/training-data-analyst) repo maintained by google cloud.
+
+#Intro
+When starting into 
+
+
+#Setting up Train/Test
+
+"""python
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, random_state = 0)
+"""
+
+
+1. How I see most train test splits on-line in turotials
+  - small data set, easily managed on one computer
+  - example of a train/test split 
+  - if you have a small data set probably this method is overkill
+  - if working with a live dataset, ie big data in the neighbourhood of 1M rows or more this is likely helpful
+2. What you'll learn
+  - How to connect to google big query from a cloud hosted jupyter notebook
+  - how to write a SQL query that returns a training, validation, test split
+3. Quick Recap on Training, validation, Test datasets
+4. How we can use GBQ to split data
+  - Method descrption: 
+    - using rand doesn't work becuase no random-key.
+    - use a column in the data as a unique hash
+    - call mod on the hash and set a threshol value
+5. Pros and cons of this method
+  - Pros:
+    - able to work with huge amounts of data and reduce them into a manageable size for building/evaluating inital models
+    - is repeatable, so other data scientists can run your code and be sure they are loading the same data
+  - Cons:
+    - overkill for a small dataset
+    - while the same segments of data are always present if the underlying data is updated the train/validate/test sets will have changed
+
+
+
+
+This project investigates various model implementations that predict short-term (24 hour advance) energy demands in the Spanish energy market.
+
+[Watch the presentation](https://youtu.be/KaWCwBD_UBA) 
+
+
+## Problem Definition and Motivation
+This project is inspired by the paper [Tackling Climate Change with Machine Learning](https://arxiv.org/abs/1906.05433) where forecasting is identified as one of the highest impact research areas to contributing to more renewable energy in the grid. Further, it explores the results from [here](https://www.researchgate.net/publication/330155110_Short-Term_Load_Forecasting_in_Smart_Grids_An_Intelligent_Modular_Approach) where the authors argue that traditional statistical forecasting is more computationally efficient compared to state of the art approaches. Finally, the last model draws from the data structure, and problem setup in the [following paper](https://www.researchgate.net/publication/323847484_Statistical_and_Machine_Learning_forecasting_methods_Concerns_and_ways_forward) to implement a state of the art Long Short Term Network forecast.
