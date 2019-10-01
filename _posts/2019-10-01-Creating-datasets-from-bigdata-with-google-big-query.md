@@ -3,15 +3,11 @@ title: "Creating datasets from bigdata with google big query"
 date: 2019-10-01T11:39:30-04:00
 ---
 
-Summary
-This post is a summary of what I've learned from the Launching into Machine Learning course by Google Cloud on Coursera. It's part of the Machine Learning with TensorFlow on Google Cloud Platform Specialization. Code examples are taken from the [training-data-analyist](https://github.com/nicholasjhana/training-data-analyst) repo maintained by google cloud.
+When starting out in machine learning one of the first things we learn is how to split data into training and test sets. And how important it is this is done in a repeatable way. At first this seems strightforward. You use functions like train_test_split from sklearn and like magic have train and test datasets.
 
-#Intro
-When starting into machine learning one of the first things I learned was how to split my data into training and test sets. And how important it is this is done in a repeatable way. At first this seemed strightforward. I could use functions like train_test_split from sklearn and like magic I have train and test datasets.
+Moving further in my machine learning journy we realize it isn't always that simple. Typical datasets in examples are in the 50k rows range. But what If the dataset was much larger? Like 10x or 100x larger? Datasets can get so huge that you aren't able to hold them in the memory of your computer.
 
-Moving further in my machine learning journy I learned it wasn't always that simple. I realized many of the datasets I was working with were small, usually on the order of 50k samples. What If the dataset was much larger? Like 10x or 100x larger? How would I work with my data when it won't fit into my computers memory.
-
-From previous work with SQL I knew there were reasonable solutions to extract subsets of my data from a larger source. I wanted a clean and structured way to do this.
+If you've worked with SQL you might know how we often only work with a subset of the whole dataset. By selecting only the rows and columns we need from a larger source. This post describes a clean and structured way to do this for a very large dataset. The concepts presented here are from the Launching into Machine Learning course by Google Cloud on Coursera. Part of the Machine Learning with TensorFlow on Google Cloud Platform Specialization.
 
 # Classic way to set up training and test datasets
 Using train_test_split is the ubiqutous method machine learning practitioners use to segment a dataset. For datasets sized less than about 100k rows most computers can hold the whole dataset in their memory and run something like the following.  
@@ -24,7 +20,7 @@ _SciKit learn method to create train and test datasets_
 
 It's a clean and simple way to get an 80/20 split on the dataset x with target dataset y. And when we set the random_state field we always produce the same subsets of data in each of the train and test buckets.
 
-A variation on this method is to split the dataset into train, validation, and test. This technique is seen in deep learning where cross validation methods are computaionally intentse and costly. To do this we first split the training and test then the training into training and validation.
+A variation on this method is to split the dataset into train, validation, and test. This technique is seen in deep learning where cross validation methods are computaionally intentse and can be costly. To do this we first split the training and test then the training into training and validation.
 
 ```python
 from sklearn.model_selection import train_test_split
@@ -39,17 +35,16 @@ _SciKit learn method to create train, validate, and test datasets_
 
 This is a simple quick solution if you have enough data to spare. I.e. A 100k row dataset would leave you with datasets of 60k training, 20k validation, and 20k test. 
 
-However it's probably not a good solution if your data absolutely massive like the 92M rows in the [Chicago Taxi Trips](https://www.kaggle.com/chicago/chicago-taxi-trips-bq) dataset on kaggle. Working with this size of data the above method won't work. 
+However it's probably not a good solution if your data absolutely massive like the 92M rows in the [Chicago Taxi Trips](https://www.kaggle.com/chicago/chicago-taxi-trips-bq) dataset on Kaggle. Working with this size of data the above method won't work for the average user. 
 
 # Method for selecting a data subset
 The general approcah to working with big data sets is to first develop a model on a smaller subset of the data, like the 100k size explained above. How can we select this data from the larger dataset?
 
 First, we will assume the dataset is hosted in structured database. This could be a private company database or more likely a cloud hosted service like Google Big Query (GBQ) or Amazon Redshift. We can use SQL to query the data and select a subset. But what's a reasonable way to do this? Lets look at some options.
 
+For the following examples we'll use the [NYC TLC Trips public dataset from google](https://console.cloud.google.com/marketplace/details/city-of-new-york/nyc-tlc-trips?filter=solution-type:dataset&q=NY&id=e4902dee-0577-42a0-ac7c-436c04ea50b6). A dataset of about 1.9M rows that is available to the public in the google big query snadbox.
+
 ## Query the data as a single block
-
-[NYC TLC Trips public dataset from google](https://console.cloud.google.com/marketplace/details/city-of-new-york/nyc-tlc-trips?filter=solution-type:dataset&q=NY&id=e4902dee-0577-42a0-ac7c-436c04ea50b6)
-
 We might consider selecting 100k of our larger dataset based on pickup_datetime, selecting only data within certain dates, or by location, only selecting a certain area. This is a valid approach if the subset you select is representative of the actual data you plan to use to make predictions. I.e. if you only plan to make predictions on taxi rides in Brooklyn you might be able to sample rides that begin and end in Brooklyn and arrive at a small enough sample. 
 
 ```sql
@@ -81,7 +76,6 @@ FROM (
 )
 WHERE split_feature < 0.01
 ```
-
 _Adapted from the [google cloud training-data-analist repo](https://github.com/nicholasjhana/training-data-analyst/blob/master/courses/machine_learning/deepdive/02_generalization/repeatable_splitting.ipynb)_
 
 In the above query we generate a random number with RAND() in the split_feature column. We then only select 1% of all rows with the WHERE split_features < 0.01 which returns 192,389 rows. This is a resonable dataset to work with for model development. From here we could download the dataset as a csv and work with it on our machine, using sklearn to do the train and test spliting for us.
@@ -102,6 +96,9 @@ FROM `bigquery-public-data.new_york_taxi_trips.tlc_green_trips_2015`
 WHERE MOD(ABS(FARM_FINGERPRINT(CAST(pickup_datetime as string))), 1500) < 8
 ```
 _Query using a hash to select 'random' row values. Returns approx 100k rows. Adapted from the [google cloud training-data-analist repo](https://github.com/nicholasjhana/training-data-analyst/blob/master/courses/machine_learning/deepdive/02_generalization/repeatable_splitting.ipynb)_
+
+{% raw %}
+<img src="http://nicholasjhana.github.io/assets/images/gbq-mod-query-result.png" alt="" class="full">{% endraw %}
 
 ### How is this query working?
 
