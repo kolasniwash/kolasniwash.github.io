@@ -25,7 +25,7 @@ It's a clean and simple way to get an 80/20 split on the dataset x with target d
 
 A variation on this method is to split the dataset into train, validation, and test. This technique is seen in deep learning where cross validation methods are computaionally intentse and costly. To do this we first split the training and test then the training into training and validation.
 
-"""python
+'''python
 from sklearn.model_selection import train_test_split
 
 #split the dataset into training and test
@@ -33,7 +33,7 @@ X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, rando
 
 #split the training dataset into training and validation
 X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.25, random_state=0)
-"""
+'''
 
 This is a simple quick solution if you have enough data to spare. I.e. A 100k row dataset would leave you with datasets of 60k training, 20k validation, and 20k test. 
 
@@ -47,16 +47,16 @@ First, we will assume the dataset is hosted in structured database. This could b
 ##Query the data as a single block
 We might consider selecting 100k of our larger dataset based on pickup_datetime, selecting only data within certain dates, or by location, only selecting a certain area. This is a valid approach if the subset you select is representative of the actual data you plan to use to make predictions. I.e. if you only plan to make predictions on taxi rides in Brooklyn you might be able to sample rides that begin and end in Brooklyn and arrive at a small enough sample. 
 
-"""SQL
+'''SQL
 -- Query only a sample subset
-"""
+'''
 
 For any other application however, this method introducs obvious bias into the data. Our sample would likely not have the same representative distribution as the original. It would only be useful for highly specific cases. How can we run a model that makes predictions for fare_amount if we train on one neighbourhood and test on another?
 
 ##QUERY data with a random function
 Like in the SciKit Learn example above we could use a RAND() call in the SQL query to select rows as a random sample. This would allow us to generate a sample dataset with the same distribution as the original.
 
-"""SQL
+'''SQL
 SELECT COUNT(*)
 FROM (
   SELECT RAND() as split_feature,
@@ -65,7 +65,7 @@ FROM (
   FROM `bigquery-public-data.new_york_taxi_trips.tlc_green_trips_2015`
 )
 WHERE split_feature < 0.01
-"""
+'''
 **Adapted from the [google cloud training-data-analist repo](https://github.com/nicholasjhana/training-data-analyst/blob/master/courses/machine_learning/deepdive/02_generalization/repeatable_splitting.ipynb)**
 
 In the above query we generate a random number with RAND() in the split_feature column. We then only select 1% of all rows with the WHERE split_features < 0.01 which returns 192,389 rows. This is a resonable dataset to work with for model development. From here we could download the dataset as a csv and work with it on our machine, using sklearn to do the train and test spliting for us.
@@ -76,7 +76,11 @@ So this method is not robust enough for a end-to-end production pipeline.
 
 
 ## Query using a MOD operator 
+A more robust solution, and one I learned from the [Launching into Machine Learning](https://www.coursera.org/learn/launching-machine-learning?) Coursera course, is to transform a column in the dataset with a hash function and then filter it with a MOD operator. This method has the benefit of always being repeatable and therefore selecting the same data when the query is run multiple times.
 
+Lets take a look at what this looks like in SQL.
+
+"""
 
 
 vendor_id
