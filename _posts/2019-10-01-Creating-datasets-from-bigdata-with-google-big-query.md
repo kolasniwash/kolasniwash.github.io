@@ -16,16 +16,16 @@ From previous work with SQl I knew there were reasonable solutions to extract su
 #Classic way to set up training and test datasets
 Using train_test_split is the ubiqutous method machine learning practitioners use to segment a dataset. For datasets sized less than about 100k rows most computers can hold the whole dataset in their memory and run something like the following.  
 
-"""python
+```python
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, random_state = 0)
-"""
+```
 
 It's a clean and simple way to get an 80/20 split on the dataset x with target dataset y. And when we set the random_state field we always produce the same subsets of data in each of the train and test buckets.
 
 A variation on this method is to split the dataset into train, validation, and test. This technique is seen in deep learning where cross validation methods are computaionally intentse and costly. To do this we first split the training and test then the training into training and validation.
 
-'''python
+```python
 from sklearn.model_selection import train_test_split
 
 #split the dataset into training and test
@@ -33,7 +33,7 @@ X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, rando
 
 #split the training dataset into training and validation
 X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.25, random_state=0)
-'''
+```
 
 This is a simple quick solution if you have enough data to spare. I.e. A 100k row dataset would leave you with datasets of 60k training, 20k validation, and 20k test. 
 
@@ -56,7 +56,7 @@ For any other application however, this method introducs obvious bias into the d
 ##QUERY data with a random function
 Like in the SciKit Learn example above we could use a RAND() call in the SQL query to select rows as a random sample. This would allow us to generate a sample dataset with the same distribution as the original.
 
-'''SQL
+```SQL
 SELECT COUNT(*)
 FROM (
   SELECT RAND() as split_feature,
@@ -65,7 +65,8 @@ FROM (
   FROM `bigquery-public-data.new_york_taxi_trips.tlc_green_trips_2015`
 )
 WHERE split_feature < 0.01
-'''
+```
+
 **Adapted from the [google cloud training-data-analist repo](https://github.com/nicholasjhana/training-data-analyst/blob/master/courses/machine_learning/deepdive/02_generalization/repeatable_splitting.ipynb)**
 
 In the above query we generate a random number with RAND() in the split_feature column. We then only select 1% of all rows with the WHERE split_features < 0.01 which returns 192,389 rows. This is a resonable dataset to work with for model development. From here we could download the dataset as a csv and work with it on our machine, using sklearn to do the train and test spliting for us.
