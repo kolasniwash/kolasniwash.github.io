@@ -11,9 +11,9 @@ When starting into machine learning one of the first things I learned was how to
 
 Moving further in my machine learning journy I learned it wasn't always that simple. I realized many of the datasets I was working with were small, usually on the order of 50k samples. What If the dataset was much larger? Like 10x or 100x larger? How would I work with my data when it won't fit into my computers memory.
 
-From previous work with SQl I knew there were reasonable solutions to extract subsets of my data from a larger source. I wanted a clean and structured way to do this.
+From previous work with SQL I knew there were reasonable solutions to extract subsets of my data from a larger source. I wanted a clean and structured way to do this.
 
-#Classic way to set up training and test datasets
+# Classic way to set up training and test datasets
 Using train_test_split is the ubiqutous method machine learning practitioners use to segment a dataset. For datasets sized less than about 100k rows most computers can hold the whole dataset in their memory and run something like the following.  
 
 ```python
@@ -41,15 +41,18 @@ This is a simple quick solution if you have enough data to spare. I.e. A 100k ro
 
 However it's probably not a good solution if your data absolutely massive like the 92M rows in the [Chicago Taxi Trips](https://www.kaggle.com/chicago/chicago-taxi-trips-bq) dataset on kaggle. Working with this size of data the above method won't work. 
 
-#Method for selecting a data subset
+# Method for selecting a data subset
 The general approcah to working with big data sets is to first develop a model on a smaller subset of the data, like the 100k size explained above. How can we select this data from the larger dataset?
 
 First, we will assume the dataset is hosted in structured database. This could be a private company database or more likely a cloud hosted service like Google Big Query (GBQ) or Amazon Redshift. We can use SQL to query the data and select a subset. But what's a reasonable way to do this? Lets look at some options.
 
-##Query the data as a single block
+## Query the data as a single block
+
+[NYC TLC Trips public dataset from google](https://console.cloud.google.com/marketplace/details/city-of-new-york/nyc-tlc-trips?filter=solution-type:dataset&q=NY&id=e4902dee-0577-42a0-ac7c-436c04ea50b6)
+
 We might consider selecting 100k of our larger dataset based on pickup_datetime, selecting only data within certain dates, or by location, only selecting a certain area. This is a valid approach if the subset you select is representative of the actual data you plan to use to make predictions. I.e. if you only plan to make predictions on taxi rides in Brooklyn you might be able to sample rides that begin and end in Brooklyn and arrive at a small enough sample. 
 
-```SQL
+```sql
 SELECT *
 FROM `bigquery-public-data.new_york_taxi_trips.tlc_green_trips_2015`
 WHERE pickup_latitude >= 40.768297 
@@ -68,7 +71,7 @@ For any other application however, this method introduces obvious bias into the 
 ## Query data with a random function
 Like in the SciKit Learn example above we could use a RAND() call in the SQL query to select rows as a random sample. This would allow us to generate a sample dataset with the same distribution as the original.
 
-```SQL
+```sql
 SELECT COUNT(*)
 FROM (
   SELECT RAND() as split_feature,
@@ -92,16 +95,13 @@ A more robust solution, and one I learned from the [Launching into Machine Learn
 
 Lets take a look at what this looks like in SQL.
 
-```SQL
+```sql
 SELECT MOD(ABS(FARM_FINGERPRINT(CAST(pickup_datetime as string))), 1500) as hash_value, 
        *
 FROM `bigquery-public-data.new_york_taxi_trips.tlc_green_trips_2015`
 WHERE MOD(ABS(FARM_FINGERPRINT(CAST(pickup_datetime as string))), 1500) < 8
 ```
 _Query using a hash to select 'random' row values. Returns approx 100k rows. Adapted from the [google cloud training-data-analist repo](https://github.com/nicholasjhana/training-data-analyst/blob/master/courses/machine_learning/deepdive/02_generalization/repeatable_splitting.ipynb)_
-
-
-
 
 ### How is this query working?
 
@@ -111,73 +111,40 @@ _Query using a hash to select 'random' row values. Returns approx 100k rows. Ada
 
 We can calculate how many rows we expect to be returned by different values in the MOD function: (19233765 rows / 1500) * 8 segments ~ 102k
 
-### Benefits of this method
-- 
+### Evaluating the MOD method
+Using the method described above is robust and simple. There are several clear advantages.
+- You always return the same subsegment of data (unless the underlying dataset changes i.e. more data is added)
+- Returns a subsample of data of the same distrubtuion as the original dataset.
+- It may be integrated into an end-to-end machine learning pipeline
 
+On the other hand there are some drawbacks.
+- Converting a column into a hash means that column is no longer useable in the selected machine learning model. Doing so would be a source of bias. Consider that if you use dates all matching YYYY-MM-DD will have the same hash.
+- The distribution of the subset is as good as the distribution of the hashed column. If the hashed column has only a few values (i.e. named locations) then your subset will refelct this bias. Good choices for columns to hash on are dates, unique userid, etc. Consider what the distribution of the hashing column is in relation to the whole dataset. If it appears uniform with a wide range of values, probably you'll be ok.
 
-vendor_id
-pickup_datetime
-dropoff_datetime
-store_and_fwd_flag
-rate_code
-pickup_longitude
-pickup_latitude
-	dropoff_longitude
-	dropoff_latitude
-	passenger_count
-	trip_distance
-	fare_amount
-	extra
-	mta_tax
-	tip_amount
-	tolls_amount
-	ehail_fee
-	total_amount
-	payment_type
-	distance_between_service
-	time_between_service
-	trip_type
-  imp_surcharge	
+# How to use a GBQ query and sample directly into a cloud hosted jypter notebook
+In this last section we'll look at accessing Google Big Query and running one of the above querys directly from Jypter. This is a great solution if you are working on a virtual machine in the cloud. You're able to clone your stored script in github, run the query and have your data accessable without having to store and track cvs files. 
 
+```python
+#import gbq library
+from google.cloud import bigquery
 
-[NYC TLC Trips public dataset from google](https://console.cloud.google.com/marketplace/details/city-of-new-york/nyc-tlc-trips?filter=solution-type:dataset&q=NY&id=e4902dee-0577-42a0-ac7c-436c04ea50b6)
+query = """
+SELECT MOD(ABS(FARM_FINGERPRINT(CAST(pickup_datetime as string))), 1500) as hash_value, 
+       *
+FROM `bigquery-public-data.new_york_taxi_trips.tlc_green_trips_2015`
+WHERE MOD(ABS(FARM_FINGERPRINT(CAST(pickup_datetime as string))), 1500) < 8
 
+#run query and return as dataframe
+subsample_dataset = bigquery.Client().query(query).to_dataframe()
+subsample_dataset.head()
+```
+_Example executing GBQ query from a cloud hosted Jypter Notebook. Adapted from the [google cloud training-data-analist repo](https://github.com/nicholasjhana/training-data-analyst/blob/master/courses/machine_learning/deepdive/02_generalization/repeatable_splitting.ipynb)_
 
+The above code uses the bigquery client library and works if executing from a [google cloud hosted Jypter Notebook](https://cloud.google.com/ai-platform/notebooks/docs/create-new) (AI Platform > Notebooks > New Instance > Python3 Notebook). The benefit of working in a cloud notebook is that you won't have to wast time getting setup with a SSH connection or Oauth client access. 
 
-
-
-
-
-
-1. How I see most train test splits on-line in turotials
-  - small data set, easily managed on one computer
-  - example of a train/test split 
-  - if you have a small data set probably this method is overkill
-  - if working with a live dataset, ie big data in the neighbourhood of 1M rows or more this is likely helpful
-2. What you'll learn
-  - How to connect to google big query from a cloud hosted jupyter notebook
-  - how to write a SQL query that returns a training, validation, test split
-3. Quick Recap on Training, validation, Test datasets
-4. How we can use GBQ to split data
-  - Method descrption: 
-    - using rand doesn't work becuase no random-key.
-    - use a column in the data as a unique hash
-    - call mod on the hash and set a threshol value
-5. Pros and cons of this method
-  - Pros:
-    - able to work with huge amounts of data and reduce them into a manageable size for building/evaluating inital models
-    - is repeatable, so other data scientists can run your code and be sure they are loading the same data
-  - Cons:
-    - overkill for a small dataset
-    - while the same segments of data are always present if the underlying data is updated the train/validate/test sets will have changed
+# Summary
+We saw a intoductory on how to transition from datasets of the size managable by a single machine to big data - so much data you can't handle it on your machine alone. Using SQL as a preprocessing step to create a subsegment of your dataset is a practical step in reducing your data to somethign you can build a model prototype. Combining SQL with python in a cloud hosted notebook makes loading and managing your dataset simple and reduces errors from managing multiple csv files.
 
 
 
 
-This project investigates various model implementations that predict short-term (24 hour advance) energy demands in the Spanish energy market.
-
-[Watch the presentation](https://youtu.be/KaWCwBD_UBA) 
-
-
-## Problem Definition and Motivation
-This project is inspired by the paper [Tackling Climate Change with Machine Learning](https://arxiv.org/abs/1906.05433) where forecasting is identified as one of the highest impact research areas to contributing to more renewable energy in the grid. Further, it explores the results from [here](https://www.researchgate.net/publication/330155110_Short-Term_Load_Forecasting_in_Smart_Grids_An_Intelligent_Modular_Approach) where the authors argue that traditional statistical forecasting is more computationally efficient compared to state of the art approaches. Finally, the last model draws from the data structure, and problem setup in the [following paper](https://www.researchgate.net/publication/323847484_Statistical_and_Machine_Learning_forecasting_methods_Concerns_and_ways_forward) to implement a state of the art Long Short Term Network forecast.
