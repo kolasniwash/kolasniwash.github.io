@@ -20,16 +20,29 @@ To start a virtual environment you will use the python command venv (native to p
  SETUP A VENV IN WITH PYTHON
 
 1. Setup the environment
-    1. Python3 -m venv my-new-environment
+```shell
+  python3 -m venv my-new-environment
+```
+
 2. Start the new environment
-    1. Source my-new-envrionment/bin/activate 
+```shell
+  source my-new-envrionment/bin/activate 
+```
+
 3. Install packages - typically you will want to use pip to do your installs, but can also use other installers
-    1. Pip install package-name
+```shell
+  pip install package-name package=x.x
+```
     2. If we add the package=x.x we can define the specific version of the package we install
+
 4. Create a setup file that contains all the packages you’ve installed - produces a file that looks like (example)
-    1. Pip freeze > requirements.txt
+```shell
+  pip freeze > requirements.txt
+```
 5. Delete a virtual environment
-    1. Rm -r my-new-environment
+```shell
+  rm -r my-new-environment
+```
 
 These are all the core steps you’ll need to create and manage a venv virtual environment. 
 
@@ -45,14 +58,24 @@ Conda is a package manager for the Anaconda distribution. Unlike venv conda will
 Setup a virtual environment In CONDA in 3 steps
 
 1. Create a new environment
-    1. Conda create -n my-new-envionment
+```shell
+  conda create -n my-new-envionment
+```
 2. See what environments are already setup
-    1. Conda info —envs 
+```shell
+  conda info —envs
+```
+
 3. Install packages - you will often want to reference the anaconda website (links) when installing (more later)
-    1. Conda install package-name
-    2. Again adding package=x.x we define the version
+```shell
+  conda install package-name package=x.x
+```
+
+ 2. Again adding package=x.x we define the version
 4. Remove an environment
-    1. Conda remove — my-new-envrionment —all
+ ```shell
+  conda remove — my-new-envrionment —all
+```
 
 The downside to using conda is that the newest distributions of packages are not always immediately available via anaconda. So if you find yourself in that situation you can install additional packages using pip from within a conda environment. However that package will not benefit from condo’s package management options. 
 
@@ -82,6 +105,7 @@ Sometimes when you open jupyter notebook you find that it doesn’t connect to t
 
 A quick workaround is to reset the iPython kernel your jupyter notebook is connecting to. This can be done by closing down the jupyter instance, and from inside the virtual environment calling the command:
 
-python -m ipykernel install - -user
-
+```shell
+  python -m ipykernel install - -user
+```
 Once run, open jupyter notebook again and check you have a connection and that the package is now working.
