@@ -13,11 +13,11 @@ In this post we talk about setting up virtual environments and point to excellen
 3. Installing packages with pip and conda
 4. How to trouble shoot a virtual environment
 
-How to setup a virtual environment from scratch.
+# How to setup a virtual environment from scratch.
 
 To start a virtual environment you will use the python command venv (native to python3). This creates a directory where all the environment variables are stored.
 
- SETUP A VENV IN WITH PYTHON
+### SETUP A VENV IN WITH PYTHON
 
 1. Setup the environment
 ```shell
@@ -51,11 +51,11 @@ The downside to this type of virtual environment is that it does not manage pack
 To learn more about working directly with venv an excellent reference can be found in the article: [A guide to python’s Virtual Environment] (https://towardsdatascience.com/virtual-environments-104c62d48c54). 
 
 
-How to setup a virtual environment with ananconda
+# How to setup a virtual environment with ananconda
 
 Conda is a package manager for the Anaconda distribution. Unlike venv conda will manage dependencies within each virtual environments. This means when you install the new tensorflow, conda will take care of installing all the updates and additional packages required to get tensorflow running.
 
-Setup a virtual environment In CONDA in 3 steps
+### Setup a virtual environment In CONDA in 3 steps
 
 1. Create a new environment
 ```shell
@@ -86,7 +86,7 @@ Using anaconda has an additional benefit - installing and management via the ter
 
 
 
-Packages to get started with
+# Packages to get started with
 
 Some of the most used packages in the data science stack are:
 numpy, pandas, matplotlib, seaborne, jupiter notebook, pytorch, tensorflow, keras, etc.
