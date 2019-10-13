@@ -28,17 +28,25 @@ We start the new environment by calling the ```source``` command. ```bin/activat
 ```
 
 3. Installing packages
-When managing your virtual environments directly you will use a package installer. Pip is a common installer for python. If your machine does not already have pip installed you can run ``` pip to do your installs, but can also use other installers
+When managing your virtual environments directly you will use a package installer. Pip is a common installer for python. If your machine does not already have pip installed you can run the [instructions in the python documentation](https://pip.pypa.io/en/stable/installing/#id9).
+
+Pip installes packages by calling the command below. We can specify the package version by calling the ```package=x.x``` and replace x.x with the respective version.
 ```shell
   pip install package-name package=x.x
+  pip install pandas package=0.25.0
 ```
-    2. If we add the package=x.x we can define the specific version of the package we install
 
-4. Create a setup file that contains all the packages you’ve installed - produces a file that looks like (example)
+4. Create a setup file that contains all the packages you’ve installed. This will produce a text file that we can use to recreate the same environment.
+
 ```shell
   pip freeze > requirements.txt
 ```
-5. Delete a virtual environment
+
+We can inspect the file we created with nano, pico, or any other text editor. ```nano ./requirements.txt```
+
+5. Exiting and deleting a virtual environment.
+We can exit a virtual environment by calling ```deactivate```. If we find that the we no longer use the envrionment, or are unable to configure dependencies we will want to removing it. Here the ```-r``` option indicates recursive and will delete all the elements within the eivornments file tree. 
+
 ```shell
   rm -r my-new-environment
 ```
