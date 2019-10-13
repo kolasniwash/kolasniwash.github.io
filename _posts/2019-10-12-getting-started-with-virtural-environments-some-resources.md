@@ -1,17 +1,13 @@
 ---
-title: "Getting Started With Virtural Environments: Some Resources"
+title: "Virtual Environments Quick Start: Steup, Resources, and Background"
 date: 2019-10-12T10:38:30-01:00
 ---
 
-One of the first things we learn when starting into a data or software project is to setup a virtual environment. Why set up a virtual environment? A virtual environment allows us to install packages (i.e. numpy, pandas, tensorflow etc…) in a controlled space. That way we know exactly the version of each package installed. Any requirements for that specific version are included inside the environment.
+One of the first things we learn when starting into a data or software project is to setup a virtual environment. Why set up a virtual environment? A virtual environment allows us to install packages (i.e. numpy, pandas, tensorflow etc…) in a controlled space. That way we know the exact the version of each package installed and we contain any dependencies between packages. 
 
-This is beneficial when working with multiple projects that use different packages, and have different version requirements. We can change our environment and some what magically everything we need for that project will be there.
+This is beneficial when working with multiple projects that use different packages, and have different version requirements. We can create an environment for each project and by doing so ensure that our code will aways find what it needs. 
 
-In this post we talk about setting up virtual environments and point to excellent resources. In order we will:
-1. How to setup a virtual environment natively
-2. How to setup a virtual environment with anaconda
-3. Installing packages with pip and conda
-4. How to trouble shoot a virtual environment
+In this post we set up virtual environments natively and with conda. Later we discuss some basic packages to get started, and simple environment debugging.
 
 # How to setup a virtual environment from scratch.
 
@@ -20,16 +16,19 @@ To start a virtual environment you will use the python command venv (native to p
 ### SETUP A VENV IN WITH PYTHON
 
 1. Setup the environment
+We setup the envonrment calling the ```venv``` command followed by the name of the environment. The ```-m``` option indicates we will pass a module name. In the example the module name is _my-new-environment_. We usually want to name teh envionment something related to our project.
 ```shell
   python3 -m venv my-new-environment
 ```
 
 2. Start the new environment
+We start the new environment by calling the ```source``` command. ```bin/activate/``` contains the activation script within the virtual environments directory. 
 ```shell
   source my-new-envrionment/bin/activate 
 ```
 
-3. Install packages - typically you will want to use pip to do your installs, but can also use other installers
+3. Installing packages
+When managing your virtual environments directly you will use a package installer. Pip is a common installer for python. If your machine does not already have pip installed you can run ``` pip to do your installs, but can also use other installers
 ```shell
   pip install package-name package=x.x
 ```
