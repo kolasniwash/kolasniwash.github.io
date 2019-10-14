@@ -120,7 +120,7 @@ Using conda is great for worry free package management. However the downside is 
 
 **Warning** installing with pip inside a conda environment works, but packages installed with pip will **not** be managed by conda. Doing this often results in mixed dependencies within the environment. If we want to use an unsupported package, it's better to use a standard python environment.
 
-Fore a detailed explanation of setting up a conda virtual environment the articule [Getting started with python environments (using conda)] (https://towardsdatascience.com/getting-started-with-python-environments-using-conda-32e9f2779307) is a great reference.
+Fore a detailed explanation of setting up a conda virtual environment the articule [Getting started with python environments in conda](https://towardsdatascience.com/getting-started-with-python-environments-using-conda-32e9f2779307) is a great reference.
 
 One last thing. Using anaconda has an additional benefit - installing and management via the terminal is optional. Using the desktop installation you can easily manage all your packages via the anaconda user interface. The article [How to setup your python environment for machine learning with anaconda](https://machinelearningmastery.com/setup-python-environment-machine-learning-deep-learning-anaconda/) is a nice tutorial on getting started with this.
 
