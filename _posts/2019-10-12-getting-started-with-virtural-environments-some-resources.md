@@ -138,13 +138,13 @@ Try creating an environment for yourself and practice installing and uninstallin
 Opening jupyter notebook from inside a conda or venv virtual environment is be done by calling ```jupyter notebook``` from the command line. When it launches you’ll want to check that you receive the ‘kernel ready’ message and that it says Python 3 on the top right menu bar.
 
 {% raw %}
-<img src="http://nicholasjhana.github.io/assets/images/lstm-data-transform.png" alt="" class="full">
+<img src="http://nicholasjhana.github.io/assets/images/jupyter-kernel-ok.png" alt="" class="full">
 {% endraw %}
 
 If you find this isn’t happening, check that ipython is installed by calling the conda list - - v command. This command will list all the current packages and their versions installed in the environment.
 
 {% raw %}
-<img src="http://nicholasjhana.github.io/assets/images/lstm-data-transform.png" alt="" class="full">
+<img src="http://nicholasjhana.github.io/assets/images/jupyter-kernel-stuck.png" alt="" class="full">
 {% endraw %}
 
 Sometimes when you open jupyter notebook you find that it doesn’t connect to the iPython kernel, or that a specific package won’t load despite it showing up when you call conda list - - v.
@@ -152,6 +152,6 @@ Sometimes when you open jupyter notebook you find that it doesn’t connect to t
 A quick workaround is to reset the iPython kernel your jupyter notebook is connecting to. This can be done by closing down the jupyter instance, and from inside the virtual environment calling the command:
 
 ```shell
-  python -m ipykernel install - -user
+  python -m ipykernel install --user
 ```
 Once run, open jupyter notebook again and check you have a connection and that the package is now working.
