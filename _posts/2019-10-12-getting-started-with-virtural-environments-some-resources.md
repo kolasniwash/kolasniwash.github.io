@@ -1,5 +1,5 @@
 ---
-title: "Virtual Environments Quick Start: Steup, Resources, and Background"
+title: "Virtual Environments Quick Start: Setup, Resources, and Background"
 date: 2019-10-12T10:38:30-01:00
 ---
 
@@ -16,7 +16,7 @@ To start a virtual environment you will use the python command venv (native to p
 ### Set up a venv with python
 
 1. Setup the environment
-We setup the envonrment calling the ```venv``` command followed by the name of the environment. The ```-m``` option indicates we will pass a module name. In the example the module name is _my-new-environment_. We usually want to name teh envionment something related to our project.
+We setup the environment calling the ```venv``` command followed by the name of the environment. The ```-m``` option indicates we will pass a module name. In the example the module name is _my-new-environment_. We usually want to name the environment something related to our project.
 ```shell
   python3 -m venv my-new-environment
 ```
@@ -30,7 +30,7 @@ We start the new environment by calling the ```source``` command. ```bin/activat
 3. Installing packages
 When managing your virtual environments directly you will use a package installer. Pip is a common installer for python. If your machine does not already have pip installed you can run the [instructions in the python documentation](https://pip.pypa.io/en/stable/installing/#id9).
 
-Pip installes packages by calling the command below. We can specify the package version by calling the ```package=x.x``` and replace x.x with the respective version.
+Pip instals packages by calling the command below. We can specify the package version by calling the ```package=x.x``` and replace x.x with the respective version.
 ```shell
   pip install package-name package=x.x
   pip install pandas package=0.25.0
@@ -46,7 +46,7 @@ This will produce a text file that we can use to recreate the same environment.
 We can inspect the file we created with nano, pico, or any other text editor i.e. ```nano ./requirements.txt```
 
 5. Exiting and deleting a virtual environment
-We can exit a virtual environment by calling ```deactivate```. If we find that the we no longer use the envrionment, or are unable to configure dependencies we will want to removing it. Here the ```-r``` option indicates recursive and will delete all the elements within the eivornments file tree. 
+We can exit a virtual environment by calling ```deactivate```. If we find that the we no longer use the environment, or are unable to configure dependencies we will want to removing it. Here the ```-r``` option indicates recursive and will delete all the elements within the environment’s file tree. 
 
 ```shell
   rm -r my-new-environment
@@ -61,12 +61,12 @@ To learn more about working directly with venv an excellent reference can be fou
 
 # How to setup a virtual environment with Ananconda
 
-Conda is a package manager for the Anaconda distribution. Unlike the venv method, conda will manage dependencies within each virtual environments. This means when you install a new version of tensorflow, conda will automaticaly take care of installing all the updates and additional packages required.
+Conda is a package manager for the Anaconda distribution. Unlike the venv method, conda will manage dependencies within each virtual environments. This means when you install a new version of tensorflow, conda will automatically take care of installing all the updates and additional packages required.
 
 ### Setup a virtual environment with Conda
 
 1. Create a new environment
-Like we saw with the python method, conda has its own command ```create``` that will initalize a virtual environment. The ```-n``` option indicates we will pass a name, in this case ```my-new-environment```.
+Like we saw with the python method, conda has its own command ```create``` that will initialize a virtual environment. The ```-n``` option indicates we will pass a name, in this case ```my-new-environment```.
 
 ```shell
   conda create -n my-new-envionment
@@ -102,7 +102,7 @@ We create and export a setup file for our conda environment with ```export```. U
 ```
 
 5. Deactivating and cleaning up environments
-We deacivate an environment with ```conda deactivate```. If we find we have many envrionments we can generate a list of all environments with ```conda info —envs```. 
+We deactivate an environment with ```conda deactivate```. If we find we have many environments we can generate a list of all environments with ```conda info —envs```. 
 
 When we decide an environment is no longer needed we can remove it.
 
@@ -116,7 +116,7 @@ We can also remove a single package within an environment in the same way.
   conda remove —n my-new-envrionment package-to-uninstall
 ```
 
-Using conda is great for worry free package management. However the downside is that the newest distributions of packages are not always immediately available via anaconda. In order to use an unsupported pakcage version with conda we can install with pip. 
+Using conda is great for worry free package management. However the downside is that the newest distributions of packages are not always immediately available via anaconda. In order to use an unsupported package version with conda we can install with pip. 
 
 **Warning** installing with pip inside a conda environment works, but packages installed with pip will **not** be managed by conda. Doing this often results in mixed dependencies within the environment. If we want to use an unsupported package, it's better to use a standard python environment.
 
