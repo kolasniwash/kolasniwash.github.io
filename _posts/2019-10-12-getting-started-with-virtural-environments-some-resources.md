@@ -102,7 +102,7 @@ We create and export a setup file for our conda environment with ```export```. U
 ```
 
 5. Deactivating and cleaning up environments
-We deactivate an environment with ```conda deactivate```. If we find we have many environments we can generate a list of all environments with ```conda info —envs```. 
+We deactivate an environment with ```conda deactivate```. If we find we have many environments we can generate a list of all environments with ```conda info —-envs```. 
 
 When we decide an environment is no longer needed we can remove it.
 
@@ -147,7 +147,7 @@ If we find this isn’t happening, check that ipython is installed by calling th
 <img src="http://nicholasjhana.github.io/assets/images/jupyter-kernel-stuck.png" alt="" class="full">
 {% endraw %}
 
-Sometimes when we open jupyter notebook we find that it doesn’t connect to the iPython kernel, or that a specific package won’t load despite it showing up when we call ```conda list -- v```.
+Sometimes when we open jupyter notebook we find that it doesn’t connect to the iPython kernel, or that a specific package won’t load despite it showing up when we call ```conda list --v```.
 
 A quick workaround for this bug is to reset the iPython kernel that jupyter notebook is connecting to. This can be done by closing down the jupyter instance, and reset the iPython kernel from inside the virtual environment.
 
