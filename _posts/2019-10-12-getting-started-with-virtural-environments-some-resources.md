@@ -135,23 +135,24 @@ Try creating an environment for yourself and practice installing and uninstallin
 
 # Working with Jupiter Notebook and Conda
 
-Opening jupyter notebook from inside a conda or venv virtual environment is be done by calling ```jupyter notebook``` from the command line. When it launches you’ll want to check that you receive the ‘kernel ready’ message and that it says Python 3 on the top right menu bar.
+Opening jupyter notebook from inside a conda or venv virtual environment is be done by calling ```jupyter notebook``` from the command line. When it launches we want to check that we receive the ‘kernel ready’ message and that it says Python 3 on the top right menu bar.
 
 {% raw %}
 <img src="http://nicholasjhana.github.io/assets/images/jupyter-kernel-ok.png" alt="" class="full">
 {% endraw %}
 
-If you find this isn’t happening, check that ipython is installed by calling the ```conda list -- v``` command. This command will list all the current packages and their versions installed in the environment.
+If we find this isn’t happening, check that ipython is installed by calling the ```conda list -- v``` command. This command will list all the current packages and their versions installed in the environment.
 
 {% raw %}
 <img src="http://nicholasjhana.github.io/assets/images/jupyter-kernel-stuck.png" alt="" class="full">
 {% endraw %}
 
-Sometimes when you open jupyter notebook you find that it doesn’t connect to the iPython kernel, or that a specific package won’t load despite it showing up when you call ```conda list -- v```.
+Sometimes when we open jupyter notebook we find that it doesn’t connect to the iPython kernel, or that a specific package won’t load despite it showing up when we call ```conda list -- v```.
 
-A quick workaround is to reset the iPython kernel your jupyter notebook is connecting to. This can be done by closing down the jupyter instance, and from inside the virtual environment calling the command:
+A quick workaround for this bug is to reset the iPython kernel that jupyter notebook is connecting to. This can be done by closing down the jupyter instance, and reset the iPython kernel from inside the virtual environment.
 
 ```shell
   python -m ipykernel install --user
 ```
-Once run, open jupyter notebook again and check you have a connection and that the package is now working.
+
+Once run, we can open jupyter notebook again and check we have a connection and that the package is now working.
