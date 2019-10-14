@@ -95,7 +95,7 @@ One difference between using the python method and conda is that we will often w
 ```
 
 4. Creating a setup file in conda
-We create and export a setup file for our conda environment with ```export```. Using the > pipes the output to the file we choose. Note how conda environment files use the .yml extension. More details on [conda environment files](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#create-env-file-manually).
+We create and export a setup file for our conda environment with ```export```. Using ```>``` pipes the output to the file we choose. Note how conda environment files use the .yml extension. More details on [conda environment files](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#create-env-file-manually).
 
 ```shell
   conda my-environment export > requirements.yml
@@ -141,7 +141,7 @@ Opening jupyter notebook from inside a conda or venv virtual environment is be d
 <img src="http://nicholasjhana.github.io/assets/images/jupyter-kernel-ok.png" alt="" class="full">
 {% endraw %}
 
-If you find this isn’t happening, check that ipython is installed by calling the conda list - - v command. This command will list all the current packages and their versions installed in the environment.
+If you find this isn’t happening, check that ipython is installed by calling the ```conda list -- v``` command. This command will list all the current packages and their versions installed in the environment.
 
 {% raw %}
 <img src="http://nicholasjhana.github.io/assets/images/jupyter-kernel-stuck.png" alt="" class="full">
