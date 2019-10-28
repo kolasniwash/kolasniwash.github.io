@@ -10,6 +10,10 @@ Collection of books that I've found highly influencial in my reading history. Yo
 
 ## Books read since 2016
 
+66. Skin In The Game, Nassim Nicholas Taleb
+
+65. Great At Work, Morten Hansen
+
 64. The Wealthy Barber Returns by Chilton, David
 
 63. Improv Wisdom: Don't Prepare, Just Show Up by Madson, Patricia Ryan
