@@ -16,7 +16,7 @@ Packages come in many flavours yet the core content is always the following file
 - README.md
 - License.txt
 - setup.py
-- __init__.py
+- ```__init__.py```
 
 The ```README.md``` file is where you explain what the package is, how it works, where to find the source code, and how others can contribute. Like a readme for a GitHub repo we want the README.md to share relevant information that helps others (and sometimes ourselves) understand what is contained in the package.
 
