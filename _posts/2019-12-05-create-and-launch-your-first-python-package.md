@@ -92,7 +92,7 @@ setup(
 
 5 Open python, iPython, or Jupiter notebook and check your package works. If it does you’ll be able to run ```python from ml-energy-utils import split_sequences``` and be able to call the function.
 
-## Continuing with your package
+## Uploading the package to PyPi
 If you’ve gotten this far you know how to make a simple package for your own use. The next step is to make your package available on a service such as PyPi. PyPi is where Pip looks for a package when you call ```pip install```. It’s pretty cool to think that anyone could download and use a package you’ve made with such a ubiquitous command. 
 
 If you want to learn more about making packages and uploading them to PyPi check out [the full tutorial](https://packaging.python.org/tutorials/packaging-projects/) from the python.org website.
