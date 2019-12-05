@@ -37,14 +37,17 @@ Below you'll find the structure of the package contents. The package-name folder
         -License.txt
         - setup.py
         - __ini__.py
-        - funtion-files.py
+        - function-1.py
+        - function-2.py
+        - ...
 ```
 
 ## How to make a package locally
 In this section we’ll go through the steps to make a package locally using a simple package I created to help with energy forecasting projects I have been working on. The package is ml-energy-utils and can be found on GitHub and PyPi.
 
-1. Before launching into making a package you’ll need some code you want to turn into a package. This could be a set of utility functions, models, or classes. Place all the ```.py``` scripts you want in the package in a directory. Name this directory whatever you’d like the package to be called.
-2. Inside the new package directory add an ```__init__.py``` file. In the example below I’ve added a few lines:
+1 Before launching into making a package you’ll need some code you want to turn into a package. This could be a set of utility functions, models, or classes. Place all the ```.py``` scripts you want in the package in a directory. Name this directory whatever you’d like the package to be called.
+
+2 Inside the new package directory add the ```__init__.py``` file. Here we want to add the references to where our functions/classes are located. Let's look at an example from the new package.
 
 ```python 
 from .make_samples import split_sequences
@@ -52,7 +55,7 @@ from .preprocessing import transform_to_windows, plot_hour, make_shifted_feature
 from .make_datasets import read_entsoe_data, format_entsoe_load_forecast_data, combine_data
 ```
 
-Why add these? They tell the package at setup where to find the different functions. Our package will work if we don’t add them but we’d have to add an extra line when we want to import them.
+Why add these? They tell the package at setup where to find the different functions. Our package will work if we don’t add them but we’d have to add an extra line when we want to import functions for use in python, iPython, Jupyter, etc.
 
 ```python
 from ml_energy_utils.make_samples import split_sequences
@@ -64,7 +67,7 @@ When we add the references we can source the packge's functions with a simpler i
 from make_samples import split_sequences
 ```
 
-3. Create the ‘’’setup.py’’’ file and add details about the package. This is where we define the name of our package, the version etc. Make sure the name is the same as the folder contining the package. 
+3 Create the ‘’’setup.py’’’ file and add details about the package. This is where we define the name of our package, the version etc. Make sure the name is the same as the folder contining the package. 
 
 ```python
 from setuptools import setup
@@ -85,8 +88,9 @@ setup(
 )
 ```
 
-4. Navigate to the folder containing your package folder. In a virtual environment run the following pip command ```pip install -U .``` This will update any packages in the current folder.
-5. Open python, iPython, or Jupiter notebook and check your package works. If it does you’ll be able to run ```python from ml-energy-utils import split_sequences``` and be able to call the function.
+4 Navigate to the folder containing your package folder. In a virtual environment run the following pip command ```pip install -U .``` This will update any packages in the current folder.
+
+5 Open python, iPython, or Jupiter notebook and check your package works. If it does you’ll be able to run ```python from ml-energy-utils import split_sequences``` and be able to call the function.
 
 ## Continuing with your package
 If you’ve gotten this far you know how to make a simple package for your own use. The next step is to make your package available on a service such as PyPi. PyPi is where Pip looks for a package when you call ```pip install```. It’s pretty cool to think that anyone could download and use a package you’ve made with such a ubiquitous command. 
