@@ -26,7 +26,19 @@ The ```setup.py``` contains all the information about how to build your package.
 
 ```__init.py__``` is the file that imports the directory as a package. This file can be left blank. However we’ll use it to allow us to import our functions or classes directly from the root package. 
 
+### Structure of package
+Below you'll find the structure of the package contents. The package-name folder contains the files mentioned above plus the scripts with the actual code contents. There is one extra file we haven't talked about, the ```setup.cfg```. Fornow we won't worry about it, just know that it's used when uploading your file to PyPi.
 
+```bash
+-containing-folder
+    - setup.cfg
+    - package-name
+        -README.md
+        -License.txt
+        - setup.py
+        - __ini__.py
+        - funtion-files.py
+```
 
 ## How to make a package locally
 In this section we’ll go through the steps to make a package locally using a simple package I created to help with energy forecasting projects I have been working on. The package is ml-energy-utils and can be found on GitHub and PyPi.
@@ -35,26 +47,26 @@ In this section we’ll go through the steps to make a package locally using a s
 2. Inside the new package directory add an ```__init__.py``` file. In the example below I’ve added a few lines:
 ```python 
 from .make_samples import split_sequences
-
 from .preprocessing import transform_to_windows, plot_hour, make_shifted_features, rename_cols, trim_length
-
 from .make_datasets import read_entsoe_data, format_entsoe_load_forecast_data, combine_data
 ```
 
 Why add these? They tell the package at setup where to find the different functions. Our package will work if we don’t add them but we’d have to add an extra line when we want to import them.
+
 ```python
 from ml_energy_utils.make_samples import split_sequences
 ```
 
-By adding these references this becomes 
+When we add the references we can source the packge's functions with a simpler import statement.
+
 ```python
 from make_samples import split_sequences
 ```
 
-3. Create the ‘’’setup.py’’’ file and add details about the package.
+3. Create the ‘’’setup.py’’’ file and add details about the package. This is where we define the name of our package, the version etc. Make sure the name is the same as the folder contining the package. 
+```python
 from setuptools import setup
 
-```python
 setup(
     name=“ml_energy_utils”,  #the name of your package
     version=“0.1”,  #current version
@@ -63,11 +75,10 @@ setup(
     description=“Simple set of utilities for working with ENTSOE energy data“, #short description of the package
     url="https://github.com/nicholasjhana/ml-energy-utils”,  #where to find the source code
     packages=setuptools.find_packages(), #lists all the files within the package
-   classifiers=[
+    classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-    ],  #metadata about the package for pip
+        "Operating System :: OS Independent"],  #metadata about the package for pip
     python_requires='>=3.6',  #set the package requirements. In this case python 3.6 or higher
 )
 ```
