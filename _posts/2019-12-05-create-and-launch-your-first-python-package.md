@@ -45,6 +45,7 @@ In this section we’ll go through the steps to make a package locally using a s
 
 1. Before launching into making a package you’ll need some code you want to turn into a package. This could be a set of utility functions, models, or classes. Place all the ```.py``` scripts you want in the package in a directory. Name this directory whatever you’d like the package to be called.
 2. Inside the new package directory add an ```__init__.py``` file. In the example below I’ve added a few lines:
+
 ```python 
 from .make_samples import split_sequences
 from .preprocessing import transform_to_windows, plot_hour, make_shifted_features, rename_cols, trim_length
@@ -64,6 +65,7 @@ from make_samples import split_sequences
 ```
 
 3. Create the ‘’’setup.py’’’ file and add details about the package. This is where we define the name of our package, the version etc. Make sure the name is the same as the folder contining the package. 
+
 ```python
 from setuptools import setup
 
