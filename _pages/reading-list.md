@@ -5,12 +5,16 @@ author_profile: false
 ---
 
 ## Currently Reading
-- Silence Is The Key, Ryan Holiday
 - Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow (2nd ed.), Aurélien Géron
 
 Collection of books that I've found highly influencial in my reading history. You can find all my reading interests on [Goodreads](https://www.goodreads.com/user/show/78107180-nicholas-jnana).
 
 ## Books read since 2016
+70. Everything is Fucked: A Book About Hope, Mark Manson
+
+69. The Bhagavad Gita, Translated by Eknath Easwaran
+
+68. Silcene Is The Key, Ryan Holiday
 
 67. Moneyball, Michael Lewis
 
