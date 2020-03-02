@@ -6,7 +6,7 @@ author_profile: false
 
 ## Currently Reading
 - Think Python: How to think like a Computer Scientist, Allen B. Downey
-- Range: How gneralists triumph in a specalized world, David Epstein 
+- Range: How generalists triumph in a specalized world, David Epstein 
 
 Collection of books that I've found highly influencial in my reading history. You can find all my reading interests on [Goodreads](https://www.goodreads.com/user/show/78107180-nicholas-jnana).
 
