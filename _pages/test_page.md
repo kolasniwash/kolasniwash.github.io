@@ -1,4 +1,3 @@
-
 ---
 permalink: /test_page/
 title: " "
