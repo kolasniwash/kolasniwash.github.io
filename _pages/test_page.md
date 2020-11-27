@@ -1,7 +1,7 @@
 
 ---
 permalink: /test_page/
-
+title: ""
 author_profile: false
 ---
 
